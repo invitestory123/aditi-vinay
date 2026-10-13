@@ -518,8 +518,12 @@ document.addEventListener('DOMContentLoaded', () => {
   });
 
   // --- Details Editor Controls ---
-  editDetailsBtn.addEventListener('click', () => editorModal.classList.remove('hidden'));
-  closeEditorModal.addEventListener('click', () => editorModal.classList.add('hidden'));
+  if (editDetailsBtn) {
+    editDetailsBtn.addEventListener('click', () => editorModal.classList.remove('hidden'));
+  }
+  if (closeEditorModal) {
+    closeEditorModal.addEventListener('click', () => editorModal.classList.add('hidden'));
+  }
 
   editorForm.addEventListener('submit', (e) => {
     e.preventDefault();
