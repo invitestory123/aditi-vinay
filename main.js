@@ -35,7 +35,7 @@ document.addEventListener('DOMContentLoaded', () => {
   const editorForm = document.getElementById('editorForm');
 
   // Application State
-  let currentDoorId = '1';
+  let currentDoorId = 'yt_bg';
   let isAudioMuted = false;
   let isPlaying = false;
   let hasOpened = false;
@@ -393,10 +393,24 @@ document.addEventListener('DOMContentLoaded', () => {
     isPlaying = true;
     initAudioContext();
 
-    // Trigger YouTube background music if URL input is filled
+    // Trigger background audio & music
     const ytUrlInput = document.getElementById('inputYoutubeUrl');
-    if (ytUrlInput && ytUrlInput.value) {
-      playYouTubeBackgroundMusic(ytUrlInput.value, true);
+    const bgMusicAudio = document.getElementById('bgMusicAudio');
+    const inputVal = (ytUrlInput && ytUrlInput.value) ? ytUrlInput.value.trim() : '';
+
+    if (inputVal) {
+      const ytId = extractYouTubeId(inputVal);
+      // For the requested YouTube short 5DUK6sdX5Ek, use our instant, crystal clear local audio
+      if (ytId === '5DUK6sdX5Ek') {
+        if (bgMusicAudio && !isAudioMuted) {
+          bgMusicAudio.play().catch(e => console.log('Audio autoplay prevented:', e));
+        }
+      } else {
+        if (bgMusicAudio) bgMusicAudio.pause();
+        playYouTubeBackgroundMusic(inputVal, true);
+      }
+    } else if (bgMusicAudio && !isAudioMuted) {
+      bgMusicAudio.play().catch(e => console.log('Audio autoplay prevented:', e));
     }
 
     // 1. Hide tap callout overlay
@@ -463,6 +477,12 @@ document.addEventListener('DOMContentLoaded', () => {
     
     const lanternsContainer = document.getElementById('lanternsContainer');
     if (lanternsContainer) lanternsContainer.classList.remove('revealed');
+
+    const bgMusicAudio = document.getElementById('bgMusicAudio');
+    if (bgMusicAudio) {
+      bgMusicAudio.pause();
+      bgMusicAudio.currentTime = 0;
+    }
 
     setTimeout(() => {
       invitationOverlay.classList.add('hidden');
@@ -547,8 +567,15 @@ document.addEventListener('DOMContentLoaded', () => {
 
     // Load YouTube Background Music if URL provided
     const ytUrlInput = document.getElementById('inputYoutubeUrl');
+    const bgMusicAudio = document.getElementById('bgMusicAudio');
     if (ytUrlInput && ytUrlInput.value) {
-      playYouTubeBackgroundMusic(ytUrlInput.value, true);
+      const newYtId = extractYouTubeId(ytUrlInput.value);
+      if (newYtId === '5DUK6sdX5Ek' && bgMusicAudio) {
+        if (!isAudioMuted && (isPlaying || hasOpened)) bgMusicAudio.play().catch(e => console.warn(e));
+      } else {
+        if (bgMusicAudio) bgMusicAudio.pause();
+        playYouTubeBackgroundMusic(ytUrlInput.value, true);
+      }
     }
 
     editorModal.classList.add('hidden');
@@ -561,7 +588,7 @@ document.addEventListener('DOMContentLoaded', () => {
   function extractYouTubeId(url) {
     if (!url) return '';
     url = url.trim();
-    const regExp = /^.*(youtu.be\/|v\/|u\/\w\/|embed\/|watch\?v=|\&v=)([^#\&\?]*).*/;
+    const regExp = /^.*(youtu.be\/|v\/|u\/\w\/|embed\/|shorts\/|watch\?v=|\&v=)([^#\&\?]*).*/;
     const match = url.match(regExp);
     if (match && match[2] && match[2].length === 11) {
       return match[2];
@@ -605,6 +632,14 @@ document.addEventListener('DOMContentLoaded', () => {
     isAudioMuted = !isAudioMuted;
     video.muted = isAudioMuted;
     
+    const bgMusicAudio = document.getElementById('bgMusicAudio');
+    if (bgMusicAudio) {
+      bgMusicAudio.muted = isAudioMuted;
+      if (!isAudioMuted && (isPlaying || hasOpened) && bgMusicAudio.paused) {
+        bgMusicAudio.play().catch(e => console.warn(e));
+      }
+    }
+
     toggleYouTubeAudioMute(isAudioMuted);
 
     if (isAudioMuted) {
@@ -661,7 +696,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
   // Prefetch secondary doors & videos in background during idle time
   function prefetchSecondaryAssets() {
-    const doorIds = ['1', '2', '3', '4', '6'];
+    const doorIds = ['yt_bg', '1', '2', '3', '4', '6'];
     const prefetch = () => {
       doorIds.forEach(id => {
         // Prefetch AVIF/WebP image

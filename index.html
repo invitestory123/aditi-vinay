@@ -36,8 +36,8 @@
   <link href="https://fonts.googleapis.com/css2?family=Amiri:ital,wght@0,400;0,700;1,400&family=Cinzel+Decorative:wght@400;700;900&family=Cinzel:wght@400;600;700;900&family=Cormorant+Garamond:ital,wght@0,400;0,600;0,700;1,400&family=Montserrat:wght@300;400;500;600;700&display=swap" rel="stylesheet">
   
   <!-- Critical Asset Preloading for Instant Render -->
-  <link rel="preload" href="./assets/doors/1.avif" as="image" type="image/avif" fetchpriority="high">
-  <link rel="preload" href="./assets/doors/1.mp4" as="video" type="video/mp4">
+  <link rel="preload" href="./assets/doors/yt_bg.avif" as="image" type="image/avif" fetchpriority="high">
+  <link rel="preload" href="./assets/doors/yt_bg.mp4" as="video" type="video/mp4">
 
   <link rel="stylesheet" href="./style.css">
 </head>
@@ -45,8 +45,9 @@
   <!-- Ambient Desktop Background -->
   <div class="ambient-backdrop" id="ambientBackdrop"></div>
 
-  <!-- Background YouTube Music Player Container -->
+  <!-- Background YouTube Music Player Container & Audio Player -->
   <div id="youtubePlayerContainer" class="youtube-player-container"></div>
+  <audio id="bgMusicAudio" src="./assets/audio/bg_music.mp3" preload="auto" loop></audio>
 
   <!-- Top Floating Controls -->
   <header class="top-controls">
@@ -65,11 +66,11 @@
       <!-- Video & Image Layers (Pure Architecture, NO text overlaid on video) -->
       <div class="media-stage" id="mediaStage">
         <!-- High-res Static Poster Image for instant load -->
-        <img id="doorPoster" src="/assets/doors/1.avif" alt="Architectural Door Cover" class="door-media poster-image active" fetchpriority="high" decoding="async">
+        <img id="doorPoster" src="/assets/doors/yt_bg.avif" alt="Vedic Wedding Theme Cover" class="door-media poster-image active" fetchpriority="high" decoding="async">
         
         <!-- Video Layer for physical opening animation -->
         <video id="doorVideo" class="door-media video-player" playsinline webkit-playsinline preload="auto" muted>
-          <source id="videoSource" src="/assets/doors/1.mp4" type="video/mp4">
+          <source id="videoSource" src="/assets/doors/yt_bg.mp4" type="video/mp4">
         </video>
         
         <!-- Freeze Frame Canvas for 100% static hold at video completion -->
@@ -269,7 +270,17 @@
         <button class="close-modal-btn" id="closeDoorModal">&times;</button>
       </div>
       <div class="door-options-grid">
-        <div class="door-option-card active" data-door="1">
+        <div class="door-option-card active" data-door="yt_bg">
+          <div class="door-thumb">
+            <img src="/assets/doors/yt_bg.webp" alt="Vedic Ganesha & Mandap">
+          </div>
+          <div class="door-info">
+            <span class="door-title">Vedic Ganesha & Mandap</span>
+            <span class="door-desc">Ganesha, diya illumination & couple mandap celebration</span>
+          </div>
+        </div>
+
+        <div class="door-option-card" data-door="1">
           <div class="door-thumb">
             <img src="/assets/doors/1.webp" alt="Door 1 - Emerald Arch">
           </div>
@@ -394,7 +405,7 @@
 
         <div class="form-group">
           <label>Background Music (YouTube Song / Video URL)</label>
-          <input type="text" id="inputYoutubeUrl" placeholder="e.g. https://www.youtube.com/watch?v=..." value="">
+          <input type="text" id="inputYoutubeUrl" placeholder="e.g. https://www.youtube.com/watch?v=..." value="https://youtube.com/shorts/5DUK6sdX5Ek?si=KdO3JdhtpD_OxnAB">
         </div>
 
         <div class="form-actions">
