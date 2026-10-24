@@ -393,10 +393,13 @@ document.addEventListener('DOMContentLoaded', () => {
     isPlaying = true;
     initAudioContext();
 
-    // Trigger YouTube background music if URL input is filled
+    // Trigger background audio & music
     const ytUrlInput = document.getElementById('inputYoutubeUrl');
-    if (ytUrlInput && ytUrlInput.value) {
-      playYouTubeBackgroundMusic(ytUrlInput.value, true);
+    const bgMusicAudio = document.getElementById('bgMusicAudio');
+    if (ytUrlInput && ytUrlInput.value && ytUrlInput.value.trim()) {
+      playYouTubeBackgroundMusic(ytUrlInput.value.trim(), true);
+    } else if (bgMusicAudio && !isAudioMuted) {
+      bgMusicAudio.play().catch(e => console.log('Audio autoplay prevented:', e));
     }
 
     // 1. Hide tap callout overlay
@@ -463,6 +466,12 @@ document.addEventListener('DOMContentLoaded', () => {
     
     const lanternsContainer = document.getElementById('lanternsContainer');
     if (lanternsContainer) lanternsContainer.classList.remove('revealed');
+
+    const bgMusicAudio = document.getElementById('bgMusicAudio');
+    if (bgMusicAudio) {
+      bgMusicAudio.pause();
+      bgMusicAudio.currentTime = 0;
+    }
 
     setTimeout(() => {
       invitationOverlay.classList.add('hidden');
@@ -545,10 +554,20 @@ document.addEventListener('DOMContentLoaded', () => {
     document.getElementById('mapVenueTitle').innerText = document.getElementById('inputVenue').value;
     document.getElementById('mapVenueAddress').innerText = document.getElementById('inputLocation').value;
 
-    // Load YouTube Background Music if URL provided
+    // Load YouTube Background Music if URL provided, else fallback to bg_music audio
     const ytUrlInput = document.getElementById('inputYoutubeUrl');
-    if (ytUrlInput && ytUrlInput.value) {
-      playYouTubeBackgroundMusic(ytUrlInput.value, true);
+    const bgMusicAudio = document.getElementById('bgMusicAudio');
+    if (ytUrlInput && ytUrlInput.value && ytUrlInput.value.trim()) {
+      if (bgMusicAudio) bgMusicAudio.pause();
+      playYouTubeBackgroundMusic(ytUrlInput.value.trim(), true);
+    } else {
+      const container = document.getElementById('youtubePlayerContainer');
+      if (container) container.innerHTML = '';
+      ytPlayerIframe = null;
+      currentYoutubeVideoId = '';
+      if (bgMusicAudio && !isAudioMuted && (isPlaying || hasOpened)) {
+        bgMusicAudio.play().catch(e => console.warn(e));
+      }
     }
 
     editorModal.classList.add('hidden');
@@ -605,6 +624,14 @@ document.addEventListener('DOMContentLoaded', () => {
     isAudioMuted = !isAudioMuted;
     video.muted = isAudioMuted;
     
+    const bgMusicAudio = document.getElementById('bgMusicAudio');
+    if (bgMusicAudio) {
+      bgMusicAudio.muted = isAudioMuted;
+      if (!isAudioMuted && (isPlaying || hasOpened) && bgMusicAudio.paused) {
+        bgMusicAudio.play().catch(e => console.warn(e));
+      }
+    }
+
     toggleYouTubeAudioMute(isAudioMuted);
 
     if (isAudioMuted) {
