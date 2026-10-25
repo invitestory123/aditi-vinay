@@ -732,6 +732,38 @@ document.addEventListener('DOMContentLoaded', () => {
     });
   }
 
+  // --- Couple Portraits Showcase Logic ---
+  const galleryArchFrame = document.getElementById('galleryArchFrame');
+  const coupleSlides = [document.getElementById('coupleSlide1'), document.getElementById('coupleSlide2')];
+  const thumbBtns = [document.getElementById('thumbBtn1'), document.getElementById('thumbBtn2')];
+  let currentSlideIndex = 0;
+
+  function switchCoupleSlide(index) {
+    currentSlideIndex = index;
+    coupleSlides.forEach((slide, i) => {
+      if (slide) slide.classList.toggle('active', i === index);
+    });
+    thumbBtns.forEach((btn, i) => {
+      if (btn) btn.classList.toggle('active', i === index);
+    });
+  }
+
+  thumbBtns.forEach((btn, i) => {
+    if (btn) {
+      btn.addEventListener('click', (e) => {
+        e.stopPropagation();
+        switchCoupleSlide(i);
+      });
+    }
+  });
+
+  if (galleryArchFrame) {
+    galleryArchFrame.addEventListener('click', () => {
+      const nextIndex = (currentSlideIndex + 1) % coupleSlides.length;
+      switchCoupleSlide(nextIndex);
+    });
+  }
+
   prefetchSecondaryAssets();
 });
 

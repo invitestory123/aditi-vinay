@@ -135,7 +135,61 @@
             REQUEST THE HONOR OF YOUR PRESENCE AT THE CELEBRATION OF THEIR MARRIAGE
           </p>
 
-          <div class="gold-separator animate-element" style="--delay: 0.6s;"></div>
+          <div class="gold-separator animate-element" style="--delay: 0.55s;"></div>
+
+          <!-- Couple Photo Showcase Section -->
+          <div class="couple-gallery-section animate-element" style="--delay: 0.6s;">
+            <div class="couple-gallery-card tilt-card" id="coupleGalleryCard">
+              <div class="gallery-arch-frame" id="galleryArchFrame" title="Tap to switch photo">
+                <!-- Slide 1: Romantic Portrait (couple1.jpg) -->
+                <div class="gallery-slide active" data-slide="1" id="coupleSlide1">
+                  <img src="/assets/photos/couple1.jpg" alt="Aditi & Vinay - Wedding Portrait" class="couple-photo-img" loading="eager">
+                  <div class="photo-gradient-vignette"></div>
+                  <div class="photo-caption-badge">
+                    <span class="caption-title">Aditi & Vinay</span>
+                    <span class="caption-subtitle">Together in Love</span>
+                  </div>
+                </div>
+
+                <!-- Slide 2: Walking in Love (couple2.jpg) -->
+                <div class="gallery-slide" data-slide="2" id="coupleSlide2">
+                  <img src="/assets/photos/couple2.jpg" alt="Aditi & Vinay - Walking in Love" class="couple-photo-img" loading="lazy">
+                  <div class="photo-gradient-vignette"></div>
+                  <div class="photo-caption-badge">
+                    <span class="caption-title">Aditi & Vinay</span>
+                    <span class="caption-subtitle">Hand in Hand Forever</span>
+                  </div>
+                </div>
+
+                <!-- Luxury Gold Border & Arch Motif -->
+                <div class="frame-gold-border"></div>
+                <div class="arch-gold-ornament">
+                  <svg width="28" height="14" viewBox="0 0 28 14" fill="none">
+                    <path d="M14 0L17.5 7L28 7L18.5 10.5L22 14L14 9.5L6 14L9.5 10.5L0 7L10.5 7L14 0Z" fill="url(#goldGradientOrnament)"/>
+                    <defs>
+                      <linearGradient id="goldGradientOrnament" x1="0%" y1="0%" x2="100%" y2="100%">
+                        <stop offset="0%" stop-color="#FFF6D5"/>
+                        <stop offset="50%" stop-color="#E5C158"/>
+                        <stop offset="100%" stop-color="#A67C1E"/>
+                      </linearGradient>
+                    </defs>
+                  </svg>
+                </div>
+              </div>
+
+              <!-- Gallery Navigation Thumbnails -->
+              <div class="gallery-nav-thumbs">
+                <button class="nav-thumb-btn active" data-target="1" id="thumbBtn1" title="View Portrait">
+                  <img src="/assets/photos/couple1.jpg" alt="Thumbnail 1">
+                  <span class="thumb-label">Portrait</span>
+                </button>
+                <button class="nav-thumb-btn" data-target="2" id="thumbBtn2" title="View Moments">
+                  <img src="/assets/photos/couple2.jpg" alt="Thumbnail 2">
+                  <span class="thumb-label">Moments</span>
+                </button>
+              </div>
+            </div>
+          </div>
 
           <!-- Interactive Scratch-to-Reveal Date Card -->
           <div class="scratch-card-wrapper animate-element" style="--delay: 0.7s;">

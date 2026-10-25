@@ -625,6 +625,166 @@ html, body {
   opacity: 0.6;
 }
 
+/* ==========================================================================
+   COUPLE PORTRAITS SHOWCASE GALLERY
+   ========================================================================== */
+.couple-gallery-section {
+  width: 100%;
+  max-width: 340px;
+  margin: 0 auto 24px;
+}
+
+.couple-gallery-card {
+  position: relative;
+  background: rgba(18, 18, 24, 0.7);
+  backdrop-filter: blur(14px);
+  -webkit-backdrop-filter: blur(14px);
+  border: 1px solid var(--color-glass-border);
+  border-radius: 20px;
+  padding: 12px;
+  box-shadow: 0 14px 40px rgba(0, 0, 0, 0.5), 0 0 20px rgba(229, 193, 88, 0.1);
+  transition: transform 0.4s cubic-bezier(0.25, 1, 0.5, 1), box-shadow 0.4s ease;
+}
+
+.couple-gallery-card:hover {
+  box-shadow: 0 18px 45px rgba(0, 0, 0, 0.6), 0 0 30px rgba(229, 193, 88, 0.2);
+}
+
+.gallery-arch-frame {
+  position: relative;
+  width: 100%;
+  aspect-ratio: 4 / 4.9;
+  border-radius: 14px;
+  overflow: hidden;
+  background: #0d0d12;
+  cursor: pointer;
+  user-select: none;
+}
+
+.gallery-slide {
+  position: absolute;
+  inset: 0;
+  opacity: 0;
+  transform: scale(1.04);
+  transition: opacity 0.6s cubic-bezier(0.25, 1, 0.5, 1), transform 0.6s cubic-bezier(0.25, 1, 0.5, 1);
+  pointer-events: none;
+}
+
+.gallery-slide.active {
+  opacity: 1;
+  transform: scale(1);
+  pointer-events: auto;
+}
+
+.couple-photo-img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: center 25%;
+  display: block;
+  transition: transform 0.8s ease;
+}
+
+.gallery-arch-frame:hover .gallery-slide.active .couple-photo-img {
+  transform: scale(1.03);
+}
+
+.photo-gradient-vignette {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(180deg, rgba(0, 0, 0, 0.15) 0%, transparent 40%, rgba(10, 10, 15, 0.8) 100%);
+  pointer-events: none;
+}
+
+.frame-gold-border {
+  position: absolute;
+  inset: 6px;
+  border: 1px solid rgba(229, 193, 88, 0.45);
+  border-radius: 10px;
+  pointer-events: none;
+  box-shadow: inset 0 0 15px rgba(229, 193, 88, 0.12);
+}
+
+.arch-gold-ornament {
+  position: absolute;
+  top: 14px;
+  left: 50%;
+  transform: translateX(-50%);
+  pointer-events: none;
+  filter: drop-shadow(0 2px 8px rgba(0, 0, 0, 0.8));
+  opacity: 0.9;
+}
+
+.photo-caption-badge {
+  position: absolute;
+  bottom: 16px;
+  left: 0;
+  right: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  pointer-events: none;
+  padding: 0 16px;
+}
+
+.caption-title {
+  font-family: var(--font-heading);
+  font-size: 1.05rem;
+  color: var(--color-gold-light);
+  letter-spacing: 2px;
+  text-shadow: 0 2px 10px rgba(0, 0, 0, 0.9);
+}
+
+.caption-subtitle {
+  font-family: var(--font-body);
+  font-size: 0.85rem;
+  font-style: italic;
+  color: var(--color-gold);
+  letter-spacing: 1.5px;
+  margin-top: 2px;
+  text-shadow: 0 2px 8px rgba(0, 0, 0, 0.9);
+}
+
+.gallery-nav-thumbs {
+  display: flex;
+  justify-content: center;
+  gap: 12px;
+  margin-top: 12px;
+}
+
+.nav-thumb-btn {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  background: rgba(14, 14, 18, 0.8);
+  border: 1px solid var(--color-glass-border);
+  border-radius: 24px;
+  padding: 4px 14px 4px 6px;
+  cursor: pointer;
+  transition: all 0.3s cubic-bezier(0.25, 1, 0.5, 1);
+  color: var(--color-text-muted);
+  font-family: var(--font-sans);
+  font-size: 0.72rem;
+  letter-spacing: 1px;
+}
+
+.nav-thumb-btn img {
+  width: 28px;
+  height: 28px;
+  border-radius: 50%;
+  object-fit: cover;
+  border: 1px solid rgba(229, 193, 88, 0.5);
+  display: block;
+}
+
+.nav-thumb-btn.active, .nav-thumb-btn:hover {
+  background: rgba(229, 193, 88, 0.18);
+  border-color: var(--color-gold);
+  color: var(--color-gold-light);
+  transform: translateY(-2px);
+  box-shadow: 0 4px 14px rgba(229, 193, 88, 0.25);
+}
+
 /* Celebration Confetti Overlay Canvas */
 .confetti-canvas {
   position: absolute;
